@@ -6,6 +6,7 @@ declare global {
     title: string;
     description: string;
     version: number;
+    testQuestions: IQuestion[];
   }
 
   interface ITestProps {
@@ -14,5 +15,11 @@ declare global {
 
   interface TestListProps {
     tests: ITest[];
+  }
+
+  interface IQuestion {
+    text: string;
+    personalityType: string;
+    id: number;
   }
 }
