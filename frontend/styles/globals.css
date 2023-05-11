@@ -19,3 +19,29 @@ html {
   background: linear-gradient(to bottom, hsl(30, 85%, 85%), hsl(330, 87%, 78%));
   background-repeat: no-repeat;
 }
+
+input[type='radio']:after {
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  position: relative;
+  background-color: #efefef;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}
+
+input[type='radio']:checked:after {
+  width: 24px;
+  height: 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  position: relative;
+  background-color: #ee6cc1;
+  content: '';
+  display: inline-block;
+  visibility: visible;
+  border: 2px solid white;
+}

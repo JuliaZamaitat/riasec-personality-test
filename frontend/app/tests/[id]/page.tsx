@@ -1,17 +1,12 @@
 import getQuestions from '../../util/questions';
+import Quiz from '../../../components/Quiz';
 
-export default async function Questions({
-  params,
-}: {
-  params: { id: number };
-}) {
-  const questions = await getQuestions(params.id);
+export default async function Test({ params }: { params: { id: number } }) {
+  const questions: IQuestion[] = await getQuestions(params.id);
 
   return (
-    <div className="max-w-2xl mx-auto">
-      {questions.map((question: any) => {
-        return <h1 key={question.id}>{question.text}</h1>;
-      })}
-    </div>
+    <>
+      <Quiz questions={questions}></Quiz>
+    </>
   );
 }

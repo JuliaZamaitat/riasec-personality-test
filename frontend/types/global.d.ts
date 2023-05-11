@@ -13,6 +13,10 @@ declare global {
     test: ITest;
   }
 
+  interface IQuestionsProps {
+    questions: IQuestion[];
+  }
+
   interface TestListProps {
     tests: ITest[];
   }
