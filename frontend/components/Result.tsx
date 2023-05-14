@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getResult } from '../app/util/result';
 
+interface IProfession {
+  id: number;
+  title: string;
+  hollandCode: string;
+}
+
 interface IData {
-  text: string;
+  hollandCode: string;
+  exactProfessions: IProfession[];
+  similarProfessions: IProfession[];
 }
 
 export default function Result({ answers }: { answers: any }) {
@@ -22,7 +30,23 @@ export default function Result({ answers }: { answers: any }) {
 
   return (
     <div>
-      <h1>Your Holland-Code: {data.text}</h1>
+      <h1>Your Holland-Code: {data.hollandCode}</h1>
+      <h2>Exact Professions:</h2>
+      <div>
+        {data.exactProfessions.map((prof: any) => {
+          return <p key={prof.id}>{prof.title}</p>;
+        })}
+      </div>
+      <h2>Similar Professions:</h2>
+      <div>
+        {data.similarProfessions.map((prof: any) => {
+          return (
+            <p key={prof.id}>
+              {prof.title}, {prof.hollandCode}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
 }

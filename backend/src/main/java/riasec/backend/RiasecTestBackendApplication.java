@@ -1,18 +1,12 @@
 package riasec.backend;
 
 import com.github.javafaker.Faker;
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
-import org.springframework.core.Ordered;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import riasec.backend.model.classes.HollandCodeTest;
 import riasec.backend.model.classes.HollandCodeTestAttempt;
 import riasec.backend.model.classes.HollandCodeTestQuestion;
@@ -23,8 +17,6 @@ import riasec.backend.repository.HollandCodeTestAttemptRepository;
 import riasec.backend.repository.HollandCodeTestQuestionRepository;
 import riasec.backend.repository.HollandCodeTestRepository;
 import riasec.backend.repository.TestTakerRepository;
-
-import java.lang.reflect.Array;
 import java.util.*;
 
 @SpringBootApplication

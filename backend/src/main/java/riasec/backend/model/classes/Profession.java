@@ -1,10 +1,6 @@
 package riasec.backend.model.classes;
 
 import jakarta.persistence.*;
-import riasec.backend.model.enums.PersonalityType;
-
-import java.util.List;
-
 @Entity
 public class Profession {
     @Id
@@ -12,16 +8,13 @@ public class Profession {
     private Long Id;
 
     private String title;
-    @ElementCollection
-    @CollectionTable(name = "personality_types", joinColumns = @JoinColumn(name = "profession_id"))
-    @Enumerated(EnumType.STRING)
-    private List<PersonalityType> personalityType;
+    private String hollandCode;
 
     public Profession() {}
 
-    public Profession(String title, List<PersonalityType> personalityType) {
+    public Profession(String title, String hollandCode) {
         this.title = title;
-        this.personalityType = personalityType;
+        this.hollandCode = hollandCode;
     }
 
     public Long getId() {
@@ -32,7 +25,6 @@ public class Profession {
         return title;
     }
 
-    public List<PersonalityType> getPersonalityType() {
-        return personalityType;
-    }
+    public String getHollandCode() { return hollandCode;}
+
 }

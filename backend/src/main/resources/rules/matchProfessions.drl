@@ -1,0 +1,41 @@
+package rules;
+
+import riasec.backend.model.classes.HollandCodeTestAttempt
+import riasec.backend.model.classes.Profession
+import java.util.List;
+import java.util.ArrayList;
+
+global List exactMatches;
+global List similarMatches;
+
+rule "Match Professions to Test Takers Holland Code"
+salience 2
+when
+    $testAttempt: HollandCodeTestAttempt()
+    $profession: Profession()
+then
+    List<String> testTakerHollandCodes = $testAttempt.getResult();
+    String professionHollandCode = $profession.getHollandCode();
+    System.out.println("Prof: " + $profession);
+     System.out.println("testTakerHollandCodes: " + testTakerHollandCodes.toString());
+
+    for(String code: testTakerHollandCodes){
+        if (code.equals(professionHollandCode)){
+            exactMatches.add($profession);
+            System.out.println("Exact " + $profession);
+        }
+        int count = 0;
+
+        for (int i = 0; i < code.length(); i++) {
+           if (professionHollandCode.contains(String.valueOf(code.charAt(i)))) {
+               count++;
+            }
+         }
+         if(count >= 2) {
+            similarMatches.add($profession);
+            System.out.println("Similar " + $profession);
+         }
+    }
+
+end
+

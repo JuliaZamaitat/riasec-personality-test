@@ -10,16 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import riasec.backend.model.classes.HollandCodeTestAttempt;
 import riasec.backend.model.classes.HollandCodeTestQuestion;
+import riasec.backend.model.classes.Profession;
 import riasec.backend.model.classes.TestTaker;
 import riasec.backend.model.enums.Gender;
 import riasec.backend.model.enums.PersonalityType;
 import riasec.backend.model.interfaces.TestAttempt;
 import riasec.backend.repository.HollandCodeTestQuestionRepository;
+import riasec.backend.repository.ProfessionRepository;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @RestController
@@ -36,9 +35,13 @@ public class HollandCodeTestAttemptController {
     @Autowired
     HollandCodeTestQuestionRepository hollandCodeTestQuestionRepository;
 
+    @Autowired
+    ProfessionRepository professionRepository;
 
     @PostMapping("/testAttempt")
-    public ResponseEntity<Map<String, List<String>>> processAnswers(@RequestBody Map<Long, Boolean> answersJson) {
+    public ResponseEntity<Map<String, List<?>>> processAnswers(@RequestBody Map<Long, Boolean> answersJson) {
+
+        //Prepare Data
         Iterable<HollandCodeTestQuestion> questions = hollandCodeTestQuestionRepository.findAll();
         // Convert Map<Long, Boolean> to Map<HollandCodeTestQuestion, Boolean>
         Map<HollandCodeTestQuestion, Boolean> questionAnswers = new HashMap<>();
@@ -48,18 +51,31 @@ public class HollandCodeTestAttemptController {
                 questionAnswers.put(question, answer);
             }
         }
-
         TestTaker testTaker = new TestTaker("Julia", "Zamaitat", "j.zamaitat@gmail.com", Gender.FEMALE);
         HollandCodeTestAttempt testAttempt = new HollandCodeTestAttempt();
         testAttempt.setTestTaker(testTaker);
         testAttempt.setQuestionAnswers(questionAnswers);
 
-        // Apply Drools rules
-        KieSession kieSession = createDroolsSession();
-        kieSession.insert(testAttempt);
-        kieSession.setGlobal("version", 2);
-        kieSession.fireAllRules();
 
+        //Neue Drools-Session erstellen
+        KieSession kieSession = createDroolsSession();
+
+        // Inserting Facts into Working Memory
+        kieSession.insert(testAttempt);
+        Iterable<Profession> allProfessions = professionRepository.findAll();
+        for (Profession profession : allProfessions) {
+            kieSession.insert(profession);
+        }
+
+        //Setting Globals
+        List<Profession> exactMatches = new ArrayList<>();
+        List<Profession> similarMatches = new ArrayList<>();
+        kieSession.setGlobal("version", 2);
+        kieSession.setGlobal("exactMatches", exactMatches);
+        kieSession.setGlobal("similarMatches", similarMatches);
+
+        //Firing Rules
+        kieSession.fireAllRules();
 
 
         System.out.println("Realistic Score: " + testAttempt.getScore(PersonalityType.REALISTIC));
@@ -68,12 +84,18 @@ public class HollandCodeTestAttemptController {
         System.out.println("Conventional Score: " + testAttempt.getScore(PersonalityType.CONVENTIONAL));
         System.out.println("Social Score: " + testAttempt.getScore(PersonalityType.SOCIAL));
         System.out.println("Enterprising Score: " + testAttempt.getScore(PersonalityType.ENTERPRISING));
+        System.out.println("Exact Matches" + exactMatches.toString());
+        System.out.println("Similar Matches" + similarMatches.toString());
 
+        //Disposing Session
         kieSession.dispose();
 
-        Map<String, List<String>> response = new HashMap<>();
 
-        response.put("text", testAttempt.getResult());
+        //Sending Response to Frontend
+        Map<String, List<?>> response = new HashMap<>();
+        response.put("hollandCode", testAttempt.getResult());
+        response.put("exactProfessions", exactMatches);
+        response.put("similarProfessions", similarMatches);
 
         return ResponseEntity.ok(response);
     }
