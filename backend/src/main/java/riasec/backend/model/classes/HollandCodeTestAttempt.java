@@ -24,7 +24,7 @@ public class HollandCodeTestAttempt implements TestAttempt {
     protected void onCreate() {
         date = new Date();
     }
-
+    @ElementCollection
     private List<String> result;
     @ManyToOne()
     @JoinColumn(name = "holland_code_test_id")
@@ -155,4 +155,7 @@ public class HollandCodeTestAttempt implements TestAttempt {
         return questionAnswers;
     }
 
+    public void setTest(HollandCodeTest hollandCodeTest) {
+        this.hollandCodeTest = hollandCodeTest;
+    }
 }

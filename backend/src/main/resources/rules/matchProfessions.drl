@@ -16,13 +16,10 @@ when
 then
     List<String> testTakerHollandCodes = $testAttempt.getResult();
     String professionHollandCode = $profession.getHollandCode();
-    System.out.println("Prof: " + $profession);
-     System.out.println("testTakerHollandCodes: " + testTakerHollandCodes.toString());
 
     for(String code: testTakerHollandCodes){
         if (code.equals(professionHollandCode)){
             exactMatches.add($profession);
-            System.out.println("Exact " + $profession);
         }
         int count = 0;
 
@@ -33,7 +30,6 @@ then
          }
          if(count >= 2) {
             similarMatches.add($profession);
-            System.out.println("Similar " + $profession);
          }
     }
 

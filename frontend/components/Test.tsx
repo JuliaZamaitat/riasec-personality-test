@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function Test(props: ITestProps) {
   const { test } = props;
   const [bgColor, setBgColor] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const hue = Math.floor(Math.random() * 360); // Random hue
@@ -13,9 +15,22 @@ export default function Test(props: ITestProps) {
     setBgColor(randomColor);
   }, []);
 
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    const value = localStorage.getItem('email') || '';
+    console.log('value ' + value);
+    if (value !== '') {
+      router.push(`/tests/${test.id}/quiz`);
+    } else router.push(`/tests/${test.id}`);
+  };
+
   return (
     <>
-      <Link href={`/tests/${test.id}`} className="flex flex-row m-5">
+      <Link
+        href={`/tests/${test.id}`}
+        className="flex flex-row m-5"
+        onClick={handleClick}
+      >
         <div
           className={`box w-48 rounded-l-lg flex-shrink-0 drop-shadow-md`}
           style={{ backgroundColor: bgColor }}

@@ -8,10 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import riasec.backend.model.classes.HollandCodeTest;
-import riasec.backend.model.classes.HollandCodeTestAttempt;
 import riasec.backend.model.classes.HollandCodeTestQuestion;
-import riasec.backend.model.classes.TestTaker;
-import riasec.backend.model.enums.Gender;
 import riasec.backend.model.enums.PersonalityType;
 import riasec.backend.repository.HollandCodeTestAttemptRepository;
 import riasec.backend.repository.HollandCodeTestQuestionRepository;
@@ -42,8 +39,6 @@ import java.util.*;
 			HashMap<HollandCodeTestQuestion, Boolean> questionAnswers = new HashMap<>();
 
 			for(int i = 0; i < max; i++) {
-				TestTaker testTaker = new TestTaker(faker.name().firstName(), faker.name().lastName(), faker.internet().emailAddress(), Gender.FEMALE);
-				testTakerRepository.save(testTaker);
 
 				List<HollandCodeTestQuestion> questions = new ArrayList<>();
 				HollandCodeTestQuestion question1 = new HollandCodeTestQuestion("Do you like working with your hands?", PersonalityType.REALISTIC);
@@ -58,7 +53,6 @@ import java.util.*;
 				questions.add(question3);
 				questions.add(question4);
 				questions.add(question5);
-
 
 
 				questionAnswers.put(question1, true);
@@ -78,14 +72,6 @@ import java.util.*;
 
 				HollandCodeTest test3 = new HollandCodeTest("Holland Code Test More Advanced Than Before", "This is a personality test based on the RIASEC model. Here we have a even more advanced implementation than before with loooots of questions. Try your best!.", 3, questions);
 				hollandCodeTestRepository.save(test3);
-
-				ArrayList<String> resultList = new ArrayList<>();
-				resultList.add(0, "BAI");
-				resultList.add(1, "RIA");
-				HollandCodeTestAttempt testAttempt = new HollandCodeTestAttempt(testTaker, resultList, test, 20, 10, 15, 5, 5, 3,questionAnswers);
-				hollandCodeTestAttemptRepository.save(testAttempt);
-
-
 			}
 		};
 	}

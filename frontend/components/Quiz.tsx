@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Result from './Result';
 
-export default function Quiz(props: IQuestionsProps) {
+export default function Quiz(props: IQuizProps) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Array<IQuestionAnswers>>([]);
   const currentQuestion = props.questions
@@ -73,7 +73,7 @@ export default function Quiz(props: IQuestionsProps) {
         </div>
       )}
 
-      {showResult && <Result answers={answers} />}
+      {showResult && <Result testId={props.testId} answers={answers} />}
     </>
   );
 }

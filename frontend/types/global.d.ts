@@ -13,8 +13,9 @@ declare global {
     test: ITest;
   }
 
-  interface IQuestionsProps {
+  interface IQuizProps {
     questions: IQuestion[];
+    testId: number;
   }
 
   interface TestListProps {
@@ -29,5 +30,16 @@ declare global {
 
   interface IQuestionAnswers {
     questionAnswers: Map<IQuestion, boolean>;
+  }
+  interface IProfession {
+    id: number;
+    title: string;
+    hollandCode: string;
+  }
+
+  interface IData {
+    hollandCode: string;
+    exactProfessions: IProfession[];
+    similarProfessions: IProfession[];
   }
 }

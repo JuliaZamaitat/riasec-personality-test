@@ -5,4 +5,6 @@ import riasec.backend.model.classes.TestTaker;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called testTakerRepository
 // CRUD refers Create, Read, Update, Delete
-public interface TestTakerRepository extends CrudRepository<TestTaker, Integer>  {}
+public interface TestTakerRepository extends CrudRepository<TestTaker, Integer>  {
+    TestTaker findByEmailAddress(String emailAddress);
+}
