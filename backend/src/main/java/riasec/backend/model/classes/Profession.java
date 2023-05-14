@@ -9,7 +9,7 @@ import java.util.List;
 public class Profession {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long Id;
 
     private String title;
     @ElementCollection
@@ -24,8 +24,8 @@ public class Profession {
         this.personalityType = personalityType;
     }
 
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return Id;
     }
 
     public String getTitle() {

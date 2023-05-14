@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+    <kbase name="rules" packages="rules">
+        <ksession name="rulesKSession"/>
+    </kbase>
+    <kbase name="rulesInSubfolder" packages="rules.*">
+        <ksession name="rulesKSession-rules-subfolder"/>
+    </kbase>
+</kmodule>

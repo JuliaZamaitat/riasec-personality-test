@@ -8,7 +8,7 @@ import riasec.backend.model.interfaces.TestQuestion;
 public class HollandCodeTestQuestion implements TestQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long Id;
     private String text;
     @Enumerated(EnumType.STRING)
     private PersonalityType personalityType;
@@ -23,8 +23,8 @@ public class HollandCodeTestQuestion implements TestQuestion {
 
 
     @Override
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return Id;
     }
     @Override
     public String getText() {

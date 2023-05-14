@@ -1,7 +1,7 @@
 package riasec.backend.model.interfaces;
 
 public interface Test {
-    Integer getId();
+    Long getId();
     String getTitle();
     String getDescription();
     Integer getVersion();

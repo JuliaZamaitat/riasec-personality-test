@@ -1,5 +1,6 @@
 package riasec.backend.model.classes;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import riasec.backend.model.interfaces.Test;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public class HollandCodeTest implements Test {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long Id;
     private String title;
     private String description;
     private Integer version;
@@ -34,8 +35,8 @@ public class HollandCodeTest implements Test {
 
 
     @Override
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return Id;
     }
 
     @Override

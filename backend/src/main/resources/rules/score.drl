@@ -1,0 +1,96 @@
+package rules;
+
+import riasec.backend.model.classes.HollandCodeTestAttempt
+import riasec.backend.model.classes.HollandCodeTestQuestion
+import riasec.backend.model.enums.PersonalityType
+import java.util.Map.Entry
+
+rule "Calculate Realistic Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.REALISTIC)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.REALISTIC);
+end
+
+rule "Calculate Investigative Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.INVESTIGATIVE)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.INVESTIGATIVE);
+end
+
+rule "Calculate Artistic Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.ARTISTIC)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.ARTISTIC);
+end
+
+rule "Calculate Social Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.SOCIAL)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.SOCIAL);
+end
+
+rule "Calculate Enterprising Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.ENTERPRISING)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.ENTERPRISING);
+end
+
+rule "Calculate Conventional Score"
+salience 10
+when
+    testAttempt : HollandCodeTestAttempt($questionAnswers : questionAnswers)
+    entry : Entry() from $questionAnswers.entrySet()
+    key: HollandCodeTestQuestion() from entry.getKey()
+    type: PersonalityType() from key.personalityType
+    eval(type == PersonalityType.CONVENTIONAL)
+    value : Boolean() from entry.getValue()
+    $testAttempt: HollandCodeTestAttempt()
+    Boolean(booleanValue == true) from value
+then
+    $testAttempt.incrementScore(PersonalityType.CONVENTIONAL);
+end

@@ -1,3 +1,4 @@
+'use server';
 import getQuestions from '../../util/questions';
 import Quiz from '../../../components/Quiz';
 

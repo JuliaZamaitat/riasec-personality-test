@@ -8,8 +8,8 @@ import java.util.List;
 @Entity
 public class TestTaker {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long Id;
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -26,12 +26,8 @@ public class TestTaker {
         this.gender = gender;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public Long getId() {
+        return Id;
     }
 
     public String getFirstName() {

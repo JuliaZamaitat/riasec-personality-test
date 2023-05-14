@@ -26,4 +26,8 @@ declare global {
     personalityType: string;
     id: number;
   }
+
+  interface IQuestionAnswers {
+    questionAnswers: Map<IQuestion, boolean>;
+  }
 }

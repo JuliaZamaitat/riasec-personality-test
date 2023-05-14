@@ -1,0 +1,71 @@
+package rules;
+
+import riasec.backend.model.classes.HollandCodeTestAttempt;
+import riasec.backend.model.enums.PersonalityType;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+import java.util.LinkedHashMap;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.HashSet;
+global Integer version;
+
+
+rule "Calculate Top 3 Personality Types"
+salience 5
+when
+    $testAttempt: HollandCodeTestAttempt()
+    eval(version == 1)
+then
+    Map<PersonalityType, Integer> scores = new HashMap<>();
+
+    scores.put(PersonalityType.REALISTIC, $testAttempt.getScore(PersonalityType.REALISTIC));
+    scores.put(PersonalityType.INVESTIGATIVE, $testAttempt.getScore(PersonalityType.INVESTIGATIVE));
+    scores.put(PersonalityType.ARTISTIC, $testAttempt.getScore(PersonalityType.ARTISTIC));
+    scores.put(PersonalityType.SOCIAL, $testAttempt.getScore(PersonalityType.SOCIAL));
+    scores.put(PersonalityType.ENTERPRISING, $testAttempt.getScore(PersonalityType.ENTERPRISING));
+    scores.put(PersonalityType.CONVENTIONAL, $testAttempt.getScore(PersonalityType.CONVENTIONAL));
+
+    List<Map.Entry<PersonalityType, Integer>> sortedEntries = new ArrayList<>(scores.entrySet());
+    sortedEntries.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+    Map<PersonalityType, Integer> top3Scores = new LinkedHashMap<>();
+    for (int i = 0; i < 3 && i < sortedEntries.size(); i++) {
+        Map.Entry<PersonalityType, Integer> entry = sortedEntries.get(i);
+        top3Scores.put(entry.getKey(), entry.getValue());
+    }
+
+    List<String> result = new ArrayList<>();
+    Set<PersonalityType> usedPersonalityTypes = new HashSet<>();
+
+    System.out.println("Old version");
+    while (!top3Scores.isEmpty()) {
+        String combination = top3Scores.keySet().stream()
+            .map(type -> type.toString().substring(0, 1))
+            .collect(Collectors.joining());
+
+        result.add(combination);
+        usedPersonalityTypes.addAll(top3Scores.keySet());
+
+        PersonalityType additionalPersonality = scores.keySet().stream()
+            .filter(type -> !usedPersonalityTypes.contains(type) && scores.get(type).equals(top3Scores.get(top3Scores.keySet().toArray()[top3Scores.size() - 1])))
+            .findFirst()
+            .orElse(null);
+
+        if (additionalPersonality != null) {
+            List<PersonalityType> keys = new ArrayList<>(top3Scores.keySet());
+            PersonalityType lastKey = keys.get(keys.size() - 1);
+
+            top3Scores.remove(lastKey);
+            top3Scores.put(additionalPersonality, scores.get(additionalPersonality));
+        } else {
+            break;
+        }
+    }
+
+    $testAttempt.setResult(result);
+end
