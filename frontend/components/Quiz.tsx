@@ -15,14 +15,12 @@ export default function Quiz(props: IQuizProps) {
     if (!currentQuestion) {
       return;
     }
-    // Store the answer in the answers array as an object
     setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];
       const answeredQuestion: IQuestionAnswers = {
         questionAnswers: new Map([[currentQuestion, answer]]),
       };
       updatedAnswers[currentQuestionIndex] = answeredQuestion;
-      console.log(updatedAnswers);
       return updatedAnswers;
     });
 
@@ -31,23 +29,24 @@ export default function Quiz(props: IQuizProps) {
     if (nextQuestionIndex < props.questions?.length) {
       setCurrentQuestionIndex(nextQuestionIndex);
     } else {
-      console.log('Quiz completed!', answers);
       setShowResult(true);
     }
   };
   return (
     <>
       {!showResult && (
-        <div className="max-w-2xl mx-auto">
-          {props.questions?.map((question: any) => {
-            return <h1 key={question.id}>{question.text}</h1>;
-          })}
-          <div className="flex flex-col mt-32 border-solid border-2 rounded-md items-center">
-            <h4 className="mt-10 text-xl text-white/70">Question 1 of 5</h4>
+        <div className="max-w-2xl mx-auto ">
+          <h1 className="text-center font-bold text-[#f8f8f8] text-5xl pt-6 mb-24">
+            Holland Code Test
+          </h1>
+          <div className="flex flex-col border-solid border-2 rounded-md items-center">
+            <h4 className="mt-10 text-xl text-white/70">
+              Question {currentQuestionIndex + 1} of {props.questions?.length}
+            </h4>
             <div className="mt-8 text-2xl text-white">
               {currentQuestion?.text}
             </div>
-            <div className="flex py-10 m-10 space-x-8 cursor-pointer">
+            <div className="flex py-6 m-10 space-x-8 cursor-pointer">
               <div className="flex items-center">
                 <input
                   type="radio"

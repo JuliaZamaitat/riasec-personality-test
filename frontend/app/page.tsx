@@ -1,9 +1,4 @@
-import RootLayout from './layout';
-
-export default function Home() {
-  return (
-    <RootLayout>
-      <h1>Hi</h1>
-    </RootLayout>
-  );
+import { redirect } from 'next/navigation';
+export default async function Home() {
+  redirect('/tests');
 }

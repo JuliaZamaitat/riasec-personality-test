@@ -26,8 +26,6 @@ public class ProfessionsSeedData implements CommandLineRunner {
         professionsSeedData.add(new Profession("Commercial Airline Pilot", "RIE"));
         professionsSeedData.add(new Profession("Commercial Drafter", "IRE"));
         professionsSeedData.add(new Profession("Corrections Officer", "SER"));
-        professionsSeedData.add(new Profession("Test", "RIC"));
-
 
         //Investigative
         professionsSeedData.add(new Profession("Actuary", "ISE"));

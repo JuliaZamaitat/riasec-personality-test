@@ -18,7 +18,6 @@ export default function Test(props: ITestProps) {
   const handleClick = (e: any) => {
     e.preventDefault();
     const value = localStorage.getItem('email') || '';
-    console.log('value ' + value);
     if (value !== '') {
       router.push(`/tests/${test.id}/quiz`);
     } else router.push(`/tests/${test.id}`);

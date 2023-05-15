@@ -5,7 +5,7 @@ import Quiz from '../../../../components/Quiz';
 export default async function QuizQuestions({
   params,
 }: {
-  params: { id: number };
+  params: { test: number };
 }) {
   const questions: IQuestion[] = await getQuestions(params.id);
 
