@@ -28,7 +28,7 @@ then
                count++;
             }
          }
-         if(count >= 2) {
+         if(count >= 3) {
             similarMatches.add($profession);
          }
     }

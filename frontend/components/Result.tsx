@@ -72,35 +72,41 @@ export default function Result({
           </Link>
         </p>
       </div>
-      <div className="pt-8 px-4">
-        <p className="text-[#767171] text-xl font-medium italic">
+      <div className="pt-10 px-4 text-center">
+        <p className="text-[#767171] text-xl italic">
           Based on your personal Holland Code, the following professions could
           be a good match for you:
         </p>
 
-        <h2 className="text-[#f8f8f8] font-bold text-3xl pt-12 text-center">
-          Exact Professions
-        </h2>
-        <div className="py-6 text-[#767171] text-xl text-center">
-          {data.exactProfessions.length > 0 ? (
-            data.exactProfessions.map((prof: IProfession) => (
-              <p key={prof.id}>{prof.title}</p>
-            ))
-          ) : (
-            <p>No exact match</p>
-          )}
+        <div className="bg-[#ffffff2e] my-10">
+          <h2 className="text-[#f8f8f8] font-bold text-3xl pt-8 text-center">
+            Exact Professions
+          </h2>
+          <div className="py-6 text-[#767171] text-xl text-center">
+            {data.exactProfessions.length > 0 ? (
+              data.exactProfessions.map((prof: IProfession) => (
+                <p className="pb-2" key={prof.id}>
+                  {prof.title} ({prof.hollandCode})
+                </p>
+              ))
+            ) : (
+              <p>No exact match</p>
+            )}
+          </div>
         </div>
-        <h2 className="text-[#f8f8f8] font-bold text-3xl pt-8 text-center">
-          Similar Professions
-        </h2>
-        <div className="py-6 text-[#767171] text-xl text-center">
-          {data.similarProfessions.map((prof: IProfession) => {
-            return (
-              <p className="pb-2" key={prof.id}>
-                {prof.title} ({prof.hollandCode})
-              </p>
-            );
-          })}
+        <div className="bg-[#ffffff2e] mb-10">
+          <h2 className="text-[#f8f8f8] font-bold text-3xl pt-8 text-center">
+            Similar Professions
+          </h2>
+          <div className="py-6 text-[#767171] text-xl text-center">
+            {data.similarProfessions.map((prof: IProfession) => {
+              return (
+                <p className="pb-2" key={prof.id}>
+                  {prof.title} ({prof.hollandCode})
+                </p>
+              );
+            })}
+          </div>
         </div>
         <Link href="/tests">
           <button className="fixed left-4 bottom-4 bg-[#f08cc0] text-white px-4 py-2 rounded-lg">
