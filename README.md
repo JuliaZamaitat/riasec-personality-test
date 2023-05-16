@@ -3,7 +3,7 @@
 
 This repository contains the code and resources for the Holland Codes project, which is based on Dr. John Holland's theory of categorizing people and work environments into six different groups. 
 
-The project aims to help individuals understand their personality types and explore career possibilities that align with their interests. It was part of a research project conducted at [Université III Toulouse - Paul Sabatier](https://www.univ-tlse3.fr) in the study program 'Compuer Science for Aerospace'.
+The project aims to help individuals understand their personality types and explore career possibilities that align with their interests. It was part of a research project conducted at [Université III Toulouse - Paul Sabatier](https://www.univ-tlse3.fr) in the study program 'Compuer Science for Aerospace', where the goal was to build a Decision-Engine based Expert System with Drools.
 
 
 
