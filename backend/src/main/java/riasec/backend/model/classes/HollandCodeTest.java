@@ -1,11 +1,9 @@
 package riasec.backend.model.classes;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import riasec.backend.model.interfaces.Test;
 
 import java.util.List;
-
 @Entity
 public class HollandCodeTest implements Test {
     @Id

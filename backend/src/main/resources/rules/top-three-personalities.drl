@@ -44,6 +44,7 @@ then
 
     System.out.println("Old version");
     while (!top3Scores.isEmpty()) {
+         // Create a combination string by joining the personality type abbreviations
         String combination = top3Scores.keySet().stream()
             .map(type -> type.toString().substring(0, 1))
             .collect(Collectors.joining());
@@ -51,11 +52,13 @@ then
         result.add(combination);
         usedPersonalityTypes.addAll(top3Scores.keySet());
 
+        // Find an additional personality type with the same score as the last one in top3Scores
         PersonalityType additionalPersonality = scores.keySet().stream()
             .filter(type -> !usedPersonalityTypes.contains(type) && scores.get(type).equals(top3Scores.get(top3Scores.keySet().toArray()[top3Scores.size() - 1])))
             .findFirst()
             .orElse(null);
 
+        // If an additional personality type is found, update the top3Scores map
         if (additionalPersonality != null) {
             List<PersonalityType> keys = new ArrayList<>(top3Scores.keySet());
             PersonalityType lastKey = keys.get(keys.size() - 1);

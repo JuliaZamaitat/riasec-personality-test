@@ -28,8 +28,6 @@ then
     scores.put(PersonalityType.ENTERPRISING, $testAttempt.getScore(PersonalityType.ENTERPRISING));
     scores.put(PersonalityType.CONVENTIONAL, $testAttempt.getScore(PersonalityType.CONVENTIONAL));
 
-    System.out.println("New version");
-
     List<PersonalityType> priorityOrder = List.of(
         PersonalityType.REALISTIC,
         PersonalityType.ENTERPRISING,
@@ -39,26 +37,30 @@ then
         PersonalityType.ARTISTIC
     );
 
+     // Sort the scores in descending order, taking into account the priority order for tiebreakers
     List<Map.Entry<PersonalityType, Integer>> sortedEntries = new ArrayList<>(scores.entrySet());
     sortedEntries.sort((e1, e2) -> {
         int cmp = e2.getValue().compareTo(e1.getValue());
         if (cmp != 0) {
             return cmp;
-        } else {
+        } else { //if values are equal, take the one with the higher priority
             return Integer.compare(priorityOrder.indexOf(e1.getKey()), priorityOrder.indexOf(e2.getKey()));
         }
     });
 
+    // Create a map to store the top 3 scores
     Map<PersonalityType, Integer> top3Scores = new LinkedHashMap<>();
     for (int i = 0; i < 3 && i < sortedEntries.size(); i++) {
         Map.Entry<PersonalityType, Integer> entry = sortedEntries.get(i);
         top3Scores.put(entry.getKey(), entry.getValue());
     }
 
+    // Create a list to store the result combination of personality types
     List<String> result = new ArrayList<>();
     result.add(top3Scores.keySet().stream()
         .map(type -> type.toString().substring(0, 1))
         .collect(Collectors.joining()));
 
+    // Assign the result list to the result property of the test attempt
     $testAttempt.setResult(result);
 end

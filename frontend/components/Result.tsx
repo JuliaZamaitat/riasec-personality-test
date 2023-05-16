@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getResult } from '../app/util/result';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Result({
   answers,
@@ -11,7 +11,6 @@ export default function Result({
 }) {
   const [data, setData] = useState<null | IData>(null);
   const [isLoading, setLoading] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
     setLoading(true);
@@ -60,8 +59,21 @@ export default function Result({
       <div className="flex justify-center bg-[#ffffff2e] text-[#f8f8f8] text-3xl font-bold p-10">
         <p> Your Holland-Code: {data.hollandCode}</p>
       </div>
+      <div className="flex justify-center text-[#f8f8f8]">
+        <p className="pt-3">
+          No idea what this means?
+          <Link
+            href="/about"
+            target="_blank"
+            className=" underline underline-offset-2"
+          >
+            {' '}
+            You can read all about here!
+          </Link>
+        </p>
+      </div>
       <div className="pt-8 px-4">
-        <p className="text-[#c196a2] text-xl font-medium italic">
+        <p className="text-[#767171] text-xl font-medium italic">
           Based on your personal Holland Code, the following professions could
           be a good match for you:
         </p>
@@ -90,12 +102,11 @@ export default function Result({
             );
           })}
         </div>
-        <button
-          className="fixed left-4 bottom-4 bg-[#f08cc0] text-white px-4 py-2 rounded-lg"
-          onClick={() => router.push('/tests')}
-        >
-          Back to Tests
-        </button>
+        <Link href="/tests">
+          <button className="fixed left-4 bottom-4 bg-[#f08cc0] text-white px-4 py-2 rounded-lg">
+            Back to Tests
+          </button>
+        </Link>
       </div>
     </div>
   );

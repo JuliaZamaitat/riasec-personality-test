@@ -3,8 +3,6 @@ package riasec.backend.model.classes;
 import jakarta.persistence.*;
 import riasec.backend.model.enums.PersonalityType;
 import riasec.backend.model.interfaces.TestAttempt;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;

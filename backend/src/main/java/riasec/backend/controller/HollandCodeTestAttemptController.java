@@ -11,10 +11,7 @@ import riasec.backend.model.classes.*;
 import riasec.backend.model.enums.Gender;
 import riasec.backend.model.enums.PersonalityType;
 import riasec.backend.repository.*;
-
 import java.util.*;
-
-
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.POST})
 public class HollandCodeTestAttemptController {
@@ -44,13 +41,11 @@ public class HollandCodeTestAttemptController {
     @PostMapping("/testAttempt")
     public ResponseEntity<Map<String, List<?>>> processAnswers(@RequestBody Map<String, Object> requestData) {
         try {
-
+            //Prepare Data
             Map<Long, Boolean> answersJson = (Map<Long, Boolean>) requestData.get("questionAnswer");
             System.out.println(answersJson);
             Map<String, String> user = (Map<String, String>) requestData.get("user");
-            //Prepare Data
             Iterable<HollandCodeTestQuestion> questions = hollandCodeTestQuestionRepository.findAll();
-            System.out.println("user: " + user);
 
             // Convert Map<Long, Boolean> to Map<HollandCodeTestQuestion, Boolean>
             Map<HollandCodeTestQuestion, Boolean> questionAnswers = new HashMap<>();
@@ -61,6 +56,7 @@ public class HollandCodeTestAttemptController {
                 }
             }
 
+            //User Information
             String firstName = user.get("firstName");
             String lastName = user.get("lastName");
             String gender = user.get("gender");
@@ -84,6 +80,8 @@ public class HollandCodeTestAttemptController {
                 System.out.println("New user created");
             }
             testTakerRepository.save(testTaker);
+
+            //Create a new testAttempt
             HollandCodeTestAttempt testAttempt = new HollandCodeTestAttempt();
             testAttempt.setTestTaker(testTaker);
             testAttempt.setQuestionAnswers(questionAnswers);
@@ -94,9 +92,7 @@ public class HollandCodeTestAttemptController {
                 testAttempt.setTest(hollandCodeTestObject);
             }
 
-
-
-            //Neue Drools-Session erstellen
+            //Create new Drools session
             KieSession kieSession = createDroolsSession();
 
             // Inserting Facts into Working Memory
@@ -123,9 +119,9 @@ public class HollandCodeTestAttemptController {
             System.out.println("Conventional Score: " + testAttempt.getScore(PersonalityType.CONVENTIONAL));
             System.out.println("Social Score: " + testAttempt.getScore(PersonalityType.SOCIAL));
             System.out.println("Enterprising Score: " + testAttempt.getScore(PersonalityType.ENTERPRISING));
+
             //Disposing Session
             kieSession.dispose();
-
 
             //Sending Response to Frontend
             Map<String, List<?>> response = new HashMap<>();
@@ -139,7 +135,6 @@ public class HollandCodeTestAttemptController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
 
     private KieSession createDroolsSession() {
         return kieContainer.newKieSession("rulesKSession");
